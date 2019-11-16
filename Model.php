@@ -3,15 +3,12 @@
 include_once("config/Database.php");
 
 class Model {
-	function __construct()
-	{
+	function __construct() {
 		$this->dbh = Database::getInstance();
 	}
 
 
-	function saveData($param)
-	{
-
+	function saveData($parameter) {
 		$header = array(
 			"Content-Type: application/x-www-form-urlencoded",
 		);
@@ -23,32 +20,30 @@ class Model {
 		// insert to database
 		$id_disburs 	= ''; 
 		$status_disburs = '';
-		$receipt 		= '';
+		$receipt 	= '';
 		$time_served 	= ''; 
 
 		if (isset($result->status) === true) {
 			$id_disburs 	= $result->id;
 			$status_disburs = $result->status;
-			$receipt 		= $result->receipt;
+			$receipt 	= $result->receipt;
 			$time_served 	= $result->time_served;
 		}
 
-		$request = json_encode($param);
+		$request = json_encode($parameter);
 		$response = json_encode($result);	
 		date_default_timezone_set('Asia/Jakarta');
 		$datetime = date('Y-m-d H:i:s'); 
-		$rs = $this->dbh->query("INSERT INTO disburs (api,id_disburs,time_served,status_disburs,receipt,request,response,created_at,updated_at) VALUES ('".$url."','".$id_disburs."','".$time_served."','".$status_disburs."','".$receipt."','".$request."','".$response."','".$datetime."','".$datetime."')");
+		$hsl = $this->dbh->query("INSERT INTO disburs (api,id_disburs,time_served,status_disburs,receipt,request,response,created_at,updated_at) VALUES ('".$url."','".$id_disburs."','".$time_served."','".$status_disburs."','".$receipt."','".$request."','".$response."','".$datetime."','".$datetime."')");
 	}
 
-	function lihatData()
-	{
-
-		$rs = $this->dbh->query("SELECT * FROM disburs");
-		return $rs;
+	function lihatData() {
+		
+		$hsl = $this->dbh->query("SELECT * FROM disburs");
+		return $hsl;
 	}
 
-	function lihatDataDetail($transaction_id)
-	{
+	function lihatDataDetail($transaction_id) {
 		$header = array(
 			"Content-Type: application/x-www-form-urlencoded",
 		);
@@ -59,12 +54,12 @@ class Model {
 		$result = json_decode($result); 
 			// update to database
 			$status_disburs = '';
-			$receipt 		= '';
+			$receipt 	= '';
 			$time_served 	= ''; 
 	
 			if (isset($result->status) === true) {
 				$status_disburs = $result->status;
-				$receipt 		= $result->receipt;
+				$receipt 	= $result->receipt;
 				$time_served 	= $result->time_served;
 			}
 			$response = json_encode($result);
@@ -72,13 +67,11 @@ class Model {
 			$updated_at = date('Y-m-d H:i:s'); 
 			$this->dbh->query("UPDATE disburs  SET status_disburs ='$status_disburs', receipt = '$receipt', time_served = '$time_served', response = '$response', updated_at = '$updated_at' WHERE id_disburs=".$transaction_id);
 
-		$rs = $this->dbh->query("SELECT * FROM disburs WHERE id_disburs=".$transaction_id);
-		return $rs->fetch();
+		$hsl = $this->dbh->query("SELECT * FROM disburs WHERE id_disburs=".$transaction_id);
+		return $hsl->fetch();
 	}
 
-	public static function http_get($url,$header)
-	{
-
+	public static function http_get($url,$header) {
 		$ch = curl_init();
 		
 		$secret_key = "HyzioY7LP6ZoO7nTYKbG8O4ISkyWnX1JvAEVAhtWKZumooCzqp41";
@@ -119,8 +112,7 @@ class Model {
 		curl_close($ch);
         return $response;
     }
-	
-	
+
 }
 
 ?>

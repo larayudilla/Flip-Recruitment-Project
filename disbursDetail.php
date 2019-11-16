@@ -32,11 +32,11 @@
 </html>
 
 <html>
-<head></head>
+<head>
+
+</head>
 
 <body>
-
-
 
 </body>
 </html>

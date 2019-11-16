@@ -1,31 +1,26 @@
 <?php 
-	//bootstrap page
-	//load class controller terlebih dahulu
 	include_once("controllers/Controller.php");
 	
-	//buat objek dari class controller
 	$controller = new Controller();
 
-	//tentukan bagaimana halaman akan di-load
 	if(!isset($_GET['flip']))
 	{
-		//pemanggilan method yang akan di-run
 		$controller->index();
 	}
 	else
 	{
 		switch($_GET['flip'])
 		{
-			case 'home' : 
-				$controller->index();
+			case 'tampil-data' :
+				$controller->show_data();
 				break;
-			
+				
 			case 'simpan' :
 				$controller->save();
 				break;
-
-			case 'tampil-data' :
-				$controller->show_data();
+				
+			case 'home' : 
+				$controller->index();
 				break;
 
 			default : 
